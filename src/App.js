@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import "./assets/style.css";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+
+const AddBook = React.lazy(() => import("./pages/AddBook"));
+const Home = React.lazy(() => import("./pages/Home"));
 
 function App() {
+  const { path } = useRouteMatch();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={<div></div>}>
+      <>
+        <Switch>
+          <Route exact path="/" component={Home}></Route>
+          <Route path={"/add-book"} component={AddBook}></Route>
+        </Switch>
+      </>
+    </Suspense>
   );
 }
 
